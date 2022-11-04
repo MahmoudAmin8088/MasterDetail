@@ -1,0 +1,82 @@
+<div class="form-body">
+        <form [formGroup]="OrderForm"(ngSubmit)="onSubmit()" >
+            <input type="hidden" id="orderId" formControlName="orderId" >
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="orderNo">Order No.</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">#</div>
+                            </div>
+                        <input readonly class="form-control" id="orderNo" formControlName="orderNo">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerId">Customer</label>
+                        <select class="form-control" [class.is-invalid]="Customer?.touched &&Customer?.invalid && Customer?.hasError('required')" id="customerId" formControlName="customerId" >
+                            <option *ngFor="let cust of Customers;" [value]="cust.customerId">{{cust.customerName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="pMethod">Payment Method</label>
+                        <select id="pMethod" formControlName="pMethod" class="form-control" [class.is-invalid]="pMethod?.touched && pMethod?.invalid && pMethod?.hasError('required') ">
+                            <option value="cash">Cash</option>
+                            <option value="visa">Visa</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="gTotal">Grand Total</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">LE</div>
+                            </div>
+                            <input readonly id="gTotal" formControlName="gTotal" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+<!--OrderItems Table -->
+<div class="table-card">
+    <table class="table table-stripedd table-sm table-bordered">
+        <thead class="table-head">
+            <th>Food</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>
+                
+                <a  mat-button class="btn btn-success btn-sm" (click)="AddOrEditOrderItem(null,OrderID)"style="background: green;">Add Item</a>
+            </th>
+        </thead>
+        <tbody>
+            <tr *ngIf="OrderItemService.OrderItems.length==0" [class.text-danger]="OrderItemService.OrderItems.length==0">
+                <td class="font-italic text-center" colspan="5">
+                    No Food Item Selected For This Order.
+                </td>
+            </tr>
+            <tr *ngFor="let item of OrderItemService.OrderItems;let i = index;">
+                <td>{{item.itemName}}</td>
+                <td>{{item.price}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.total}}</td>
+                <td>
+                    
+                <a class="btn btn-info btn-sm text white" (click)="AddOrEditOrderItem(i,OrderID)" style="background:green;">Edit</a>
+                <a class="btn btn-danger btn-sm text white ml-1" (click)="OnDeleteOrderItem(i)" style="background: red;">del</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>  
+    <div class="form-group">
+        <!-- onClick="window.location.reload()" -->
+        <button type="submit" class="btn btn-dark" [disabled]="OrderForm.invalid || OrderItemService.OrderItems.length == 0 ">Submit</button>
+        <a class="btn btn-outline-dark ml-1" style="margin-left: 5px;" routerLink="/orders">Orders</a>
+
+    </div>
+ </form>
+</div>

@@ -1,0 +1,49 @@
+<div class="form-body">
+    <form [formGroup]="myForm" (ngSubmit)="SignUp()">
+        <div class="container">
+          <h1>Sign Up</h1>
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input id="fullName" type="text" class="form-control"  placeholder="Your Name" formControlName="fullName" []>
+                <div *ngIf="fullName?.touched && fullName?.invalid" class="alert alert-danger">
+                <div *ngIf="fullName?.hasError('required')"> Full Name Is Required. </div>
+               </div>
+            </div>    
+            <div class="form-group">
+                <label for="userName">User Name</label>
+                <input id="userName" type="text" class="form-control" placeholder="User Name" formControlName="userName">
+                <div *ngIf="userName?.touched && userName?.invalid" class="alert alert-danger">
+                <div *ngIf="userName?.hasError('required')"> User Name Is Required. </div>
+                </div>
+            </div>  
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" type="email" class="form-control" placeholder="Email" formControlName="email">
+                <div *ngIf="email?.touched && email?.invalid" class="alert alert-danger">
+                <div *ngIf="email?.hasError('required')"> Email Is Required. </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input id="password" type="password" class="form-control" placeholder="Password" formControlName="password">
+                <div *ngIf="password?.touched && password?.invalid" class="alert alert-danger">
+                  <div *ngIf="password?.hasError('required')"> password Is Required. </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                    <label for="confirmPassword">Confarm Password</label>
+                    <input id="confirmPassword" type="password" class="form-control" placeholder="Confirm Password" formControlName="confirmPassword">
+                    <div *ngIf="Cpassword?.touched && Cpassword?.invalid" class="alert alert-danger">
+                    <div *ngIf="Cpassword?.hasError('required')"> Confirm Password Is Required. </div>
+                    </div>
+            </div>
+            
+            
+            <div class="form-group">
+             <button class="btn btn-primary" [disabled]="myForm.invalid" type="submit"  >SignUp</button>     
+            </div>
+
+        </div>    
+    </form>
+</div>
