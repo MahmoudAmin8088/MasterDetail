@@ -19,7 +19,7 @@ namespace MasterDetails.api.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(List<OrderAndCustomer>))]
+        [ProducesResponseType(200, Type = typeof(List<OrderDto>))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
@@ -28,10 +28,10 @@ namespace MasterDetails.api.Controllers
             var orders = _unitOfWork.Orders.GetOrders();
             if (orders == null)
                 return NotFound();
-            var orderDto = new List<OrderAndCustomer>();
+            var orderDto = new List<OrderDto>();
             foreach (var order in orders)
             {
-                orderDto.Add(order);
+                orderDto.Add(_mapper.Map<OrderDto>(order));
             }
             return Ok(orderDto);
 

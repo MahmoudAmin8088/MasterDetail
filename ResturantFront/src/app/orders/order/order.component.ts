@@ -27,6 +27,7 @@ export class OrderComponent implements OnInit {
     private currentRouter:ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.deleteList();
     this.GorderForm();
     this.GetCustomer();
 
@@ -65,6 +66,10 @@ export class OrderComponent implements OnInit {
       
     });
   }
+  deleteList(){
+    let items = this.OrderItemService.OrderItems.length;
+    this.OrderItemService.OrderItems.splice(0,items);
+  }
   updateOrder(){
     var orderDto={
        ...this.Order= this. OrderForm.value,
@@ -81,8 +86,10 @@ export class OrderComponent implements OnInit {
     });
   }
   GetOrder(id:number){
+    debugger
     this.service.Get(id).subscribe(res=>{
-      this.OrderForm.patchValue(res.order);
+       this.OrderForm.patchValue(res.order);
+     
       this.OrderItemService.OrderItems=res.orderDetails;
     });
   }

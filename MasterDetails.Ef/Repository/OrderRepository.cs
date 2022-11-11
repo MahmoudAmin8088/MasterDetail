@@ -46,48 +46,37 @@ namespace MasterDetails.Ef.Repository
 
         public ICollection<Order> GetCustomerOrders(int CustomerId)
         {
-            var result = _context.Orders.Include(o=>o.Customer).Where(c=>c.CustomerId == CustomerId).ToList();
+            var result = _context.Orders.Include(o=>o.Customer).Where(o=>o.CustomerId == CustomerId).ToList();
             return result;
         }
 
-        public Object GetOrder(int id)
+        public Object GetOrder(int ordeId)
         {
-            var order = _context.Orders.FirstOrDefault(a=>a.OrderId == id);
+            var order = _context.Orders.Find(ordeId);
 
-            var orderDetails = (from a in _context.OrderItems
-                                join i in _context.items
-                                on a.ItemId equals i.ItemId
-                                where a.OrderId == id
+            var orderDetails = from a in _context.OrderItems
+                               join i in _context.items
+                               on a.ItemId equals i.ItemId
+                               where a.OrderId == ordeId
 
-                                select new
-                                {
-                                    a.OrderId,
-                                    a.OrderItemId,
-                                    a.ItemId,
-                                    itemName = i.Name,
-                                    i.Price,
-                                    a.Quantity,
-                                    total = a.Quantity * i.Price
-                                });
+                               select new
+                               {
+                                   a.OrderId,
+                                   a.OrderItemId,
+                                   a.ItemId,
+                                   itemName = i.Name,
+                                   i.Price,
+                                   a.Quantity,
+                                   total = a.Quantity * i.Price
+                               };
 
-            return new { order, orderDetails };  
+            return new { order, orderDetails };
         }
 
-        public List<OrderAndCustomer> GetOrders()
+        public List<Order> GetOrders()
         {
-            var result = (from o in _context.Orders
-                          join c in _context.Customer
-                          on o.CustomerId equals c.CustomerId
-                          select new OrderAndCustomer
-                          {
-                             OrderId= o.OrderId,
-                             OrderNo= o.OrderNo,
-                             CustomerName = c.CustomerName,
-                             PMethod = o.PMethod,
-                             GTotal= o.GTotal
-                          }).ToList();
-
-            return result; 
+            var result = _context.Orders.Include(c =>c.Customer).ToList();
+            return result;
         }
 
     }

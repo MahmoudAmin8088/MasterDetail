@@ -16,7 +16,7 @@ namespace MasterDetails.Core.Models
         public string OrderNo { get; set; }
         public int CustomerId { get; set; }
         [ForeignKey("CustomerId")]
-        public Customer Customer { get; set; }
+        public Customer? Customer { get; set; }
         public string PMethod { get; set; }
         public decimal GTotal { get; set; }
         public IList<OrderItems> OrderItems { get; set; }

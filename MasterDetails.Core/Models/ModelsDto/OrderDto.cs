@@ -14,6 +14,8 @@ namespace MasterDetails.Core.Models.ModelsDto
         public string OrderNo { get; set; }
         [Required]
         public int CustomerId { get; set; }
+        public Customer? Customer { get; set; }
+
         [Required]
         public string PMethod { get; set; }
         [Required]

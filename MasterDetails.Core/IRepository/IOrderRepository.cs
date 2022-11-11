@@ -10,10 +10,9 @@ namespace MasterDetails.Core.IRepository
     public interface IOrderRepository:IBaseRepository<Order>
     {
         ICollection<Order> GetCustomerOrders(int CustomerId);
-       Order CreateOrder(Order order);
+        Order CreateOrder(Order order);
         Order UpdateOrder(Order order);
-
-      List<OrderAndCustomer> GetOrders();
-        Object GetOrder(int id);
+        List<Order> GetOrders();
+         Object GetOrder(int id);
     }
 }
